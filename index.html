@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Workout & Meal Planner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .dashboard-card {
+            transition: transform 0.3s ease;
+        }
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+        }
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+        .plan-tab.active {
+            border-bottom: 3px solid #2563eb;
+            color: #2563eb;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md fixed w-full z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <i class="bi bi-lightning-charge-fill text-blue-600 text-2xl"></i>
+                    <span class="ml-2 font-bold text-xl">FitFlow</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button id="loginBtn" class="text-gray-600 hover:text-blue-600">Login</button>
+                    <button id="signupBtn" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pt-20">
+        <!-- Hero Section -->
+        <div class="bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl p-8 mb-8 text-white">
+            <div class="max-w-3xl">
+                <h1 class="text-3xl md:text-4xl font-bold mb-4">Your AI-Powered Fitness & Nutrition Partner</h1>
+                <p class="text-lg mb-6">Personalized workout and meal plans tailored to your goals, preferences, and fitness level.</p>
+                <button class="bg-white text-blue-600 px-6 py-3 rounded-lg font-medium hover:bg-gray-100 transition-colors">Get Started Free</button>
+            </div>
+        </div>
+
+        <!-- Dashboard -->
+        <h2 class="text-2xl font-semibold mb-6">Your Dashboard</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Workout Plan Card -->
+            <div class="dashboard-card bg-white p-6 rounded-xl shadow-sm">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xl font-semibold">Today's Workout</h2>
+                    <i class="bi bi-trophy text-yellow-500 text-xl"></i>
+                </div>
+                <div class="space-y-3">
+                    <div class="flex items-center">
+                        <i class="bi bi-check-circle text-green-500"></i>
+                        <span class="ml-2">30 min Cardio</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="bi bi-circle text-gray-300"></i>
+                        <span class="ml-2">Strength Training - Chest & Triceps</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="bi bi-circle text-gray-300"></i>
+                        <span class="ml-2">15 min Core Exercises</span>
+                    </div>
+                </div>
+                <button class="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">Start Workout</button>
+            </div>
+
+            <!-- Meal Plan Card -->
+            <div class="dashboard-card bg-white p-6 rounded-xl shadow-sm">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xl font-semibold">Meal Plan</h2>
+                    <i class="bi bi-calendar-check text-blue-500 text-xl"></i>
+                </div>
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span>Breakfast</span>
+                        <span class="text-sm text-gray-500">450 cal</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span>Lunch</span>
+                        <span class="text-sm text-gray-500">650 cal</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span>Dinner</span>
+                        <span class="text-sm text-gray-500">550 cal</span>
+                    </div>
+                </div>
+                <div class="mt-4 flex justify-between text-sm">
+                    <span>Daily Goal: 2000 cal</span>
+                    <span>Remaining: 350 cal</span>
+                </div>
+                <button class="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">View Full Plan</button>
+            </div>
+
+            <!-- Progress Card -->
+            <div class="dashboard-card bg-white p-6 rounded-xl shadow-sm">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xl font-semibold">Progress</h2>
+                    <i class="bi bi-graph-up text-purple-500 text-xl"></i>
+                </div>
+                <div class="flex justify-center">
+                    <svg class="progress-ring" width="120" height="120">
+                        <circle class="progress-ring__circle" stroke="#e5e7eb" stroke-width="8" fill="transparent" r="52" cx="60" cy="60"/>
+                        <circle class="progress-ring__circle" stroke="#2563eb" stroke-width="8" fill="transparent" r="52" cx="60" cy="60" stroke-dasharray="326.7256" stroke-dashoffset="98.01768"/>
+                    </svg>
+                </div>
+                <div class="mt-4 text-center">
+                    <span class="text-2xl font-bold">70%</span>
+                    <p class="text-sm text-gray-500">Weekly Goal Progress</p>
+                </div>
+                <div class="mt-4 grid grid-cols-3 text-center text-sm">
+                    <div>
+                        <p class="font-bold">5/7</p>
+                        <p class="text-gray-500">Workouts</p>
+                    </div>
+                    <div>
+                        <p class="font-bold">2.5 lbs</p>
+                        <p class="text-gray-500">Weight Lost</p>
+                    </div>
+                    <div>
+                        <p class="font-bold">92%</p>
+                        <p class="text-gray-500">Adherence</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Recommendations -->
+        <div class="mt-8 bg-white p-6 rounded-xl shadow-sm">
+            <div class="flex items-center space-x-3 mb-4">
+                <i class="bi bi-lightning-fill text-yellow-500 text-xl"></i>
+                <h2 class="text-xl font-semibold">AI Recommendations</h2>
+            </div>
+            <div class="p-4 bg-blue-50 rounded-lg border border-blue-100">
+                <p class="text-gray-700">Based on your recent activity patterns and goals, I recommend increasing your protein intake by 15g daily and adding one more resistance training session this week to accelerate muscle building while maintaining your fat loss trajectory.</p>
+                <div class="mt-3 flex space-x-2">
+                    <button class="text-blue-600 text-sm hover:text-blue-800">Apply Recommendation</button>
+                    <button class="text-gray-500 text-sm hover:text-gray-700">Dismiss</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Weekly Workout Plan -->
+        <div class="mt-8">
+            <h2 class="text-2xl font-semibold mb-4">Your Weekly Workout Plan</h2>
+            <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                <div class="flex border-b">
+                    <button class="plan-tab active flex-1 py-3 text-center font-medium">Muscle Building</button>
+                    <button class="plan-tab flex-1 py-3 text-center font-medium text-gray-600">Fat Loss</button>
+                </div>
+                <div class="p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="border rounded-lg p-4">
+                            <h3 class="font-semibold mb-2">Monday - Chest & Triceps</h3>
+                            <ul class="text-sm space-y-2">
+                                <li>• Bench Press: 4 sets x 8-10 reps</li>
+                                <li>• Incline Dumbbell Press: 3 sets x 10-12 reps</li>
+                                <li>• Cable Flyes: 3 sets x 12-15 reps</li>
+                                <li>• Tricep Pushdowns: 3 sets x 12 reps</li>
+                                <li>• Overhead Tricep Extension: 3 sets x 10 reps</li>
+                            </ul>
+                        </div>
+                        <div class="border rounded-lg p-4">
+                            <h3 class="font-semibold mb-2">Tuesday - Back & Biceps</h3>
+                            <ul class="text-sm space-y-2">
+                                <li>• Pull-ups: 4 sets x 8-10 reps</li>
+                                <li>• Bent-over Rows: 3 sets x 10-12 reps</li>
+                                <li>• Lat Pulldowns: 3 sets x 12 reps</li>
+                                <li>• Barbell Curls: 3 sets x 10 reps</li>
+                                <li>• Hammer Curls: 3 sets x 12 reps</li>
+                            </ul>
+                        </div>
+                        <div class="border rounded-lg p-4">
+                            <h3 class="font-semibold mb-2">Wednesday - Cardio & Core</h3>
+                            <ul class="text-sm space-y-2">
+                                <li>• HIIT Cardio: 20 min</li>
+                                <li>• Plank: 3 sets x 45 seconds</li>
+                                <li>• Russian Twists: 3 sets x 20 reps</li>
+                                <li>• Leg Raises: 3 sets x 15 reps</li>
+                                <li>• Mountain Climbers: 3 sets x 30 seconds</li>
+                            </ul>
+                        </div>
+                        <div class="border rounded-lg p-4">
+                            <h3 class="font-semibold mb-2">Thursday - Legs</h3>
+                            <ul class="text-sm space-y-2">
+                                <li>• Squats: 4 sets x 8-10 reps</li>
+                                <li>• Romanian Deadlifts: 3 sets x 10 reps</li>
+                                <li>• Leg Press: 3 sets x 12 reps</li>
+                                <li>• Walking Lunges: 3 sets x 10 each leg</li>
+                                <li>• Calf Raises: 3 sets x 15 reps</li>
+                            </ul>
+                        </div>
+                        <div class="border rounded-lg p-4">
+                            <h3 class="font-semibold mb-2">Friday - Shoulders</h3>
+                            <ul class="text-sm space-y-2">
+                                <li>• Overhead Press: 4 sets x 8-10 reps</li>
+                                <li>• Lateral Raises: 3 sets x 12 reps</li>
+                                <li>• Front Raises: 3 sets x 12 reps</li>
+                                <li>• Face Pulls: 3 sets x 15 reps</li>
+                                <li>• Shrugs: 3 sets x 12 reps</li>
+                            </ul>
+                        </div>
+                        <div class="border rounded-lg p-4">
+                            <h3 class="font-semibold mb-2">Saturday - Full Body</h3>
+                            <ul class="text-sm space-y-2">
+                                <li>• Deadlifts: 4 sets x 8 reps</li>
+                                <li>• Push-ups: 3 sets x 15 reps</li>
+                                <li>• Dumbbell Rows: 3 sets x 10 each arm</li>
+                                <li>• Goblet Squats: 3 sets x 12 reps</li>
+                                <li>• 20 min Steady-state Cardio</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Meal Plan Section -->
+        <div class="mt-8">
+            <h2 class="text-2xl font-semibold mb-4">Weekly Meal Plan</h2>
+            <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                <div class="p-6">
+                    <div class="mb-4">
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="font-semibold">Macronutrient Targets</h3>
+                            <span class="text-sm text-blue-600 cursor-pointer">Adjust</span>
+                        </div>
+                        <div class="grid grid-cols-3 gap-3">
+                            <div class="bg-blue-50 p-3 rounded-lg">
+                                <p class="text-center font-semibold text-blue-700">Protein</p>
+                                <p class="text-center text-2xl font-bold">180g</p>
+                            </div>
+                            <div class="bg-green-50 p-3 rounded-lg">
+                                <p class="text-center font-semibold text-green-700">Carbs</p>
+                                <p class="text-center text-2xl font-bold">220g</p>
+                            </div>
+                            <div class="bg-yellow-50 p-3 rounded-lg">
+                                <p class="text-center font-semibold text-yellow-700">Fats</p>
+                                <p class="text-center text-2xl font-bold">60g</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6">
+                        <div class="flex overflow-x-auto pb-2 space-x-4">
+                            <button class="whitespace-nowrap px-4 py-2 bg-blue-600 text-white rounded-lg">Monday</button>
+                            <button class="whitespace-nowrap px-4 py-2 bg-gray-200 text-gray-700 rounded-lg">Tuesday</button>
+                            <button class="whitespace-nowrap px-4 py-2 bg-gray-200 text-gray-700 rounded-lg">Wednesday</button>
+                            <button class="whitespace-nowrap px-4 py-2 bg-gray-200 text-gray-700 rounded-lg">Thursday</button>
+                            <button class="whitespace-nowrap px-4 py-2 bg-gray-200 text-gray-700 rounded-lg">Friday</button>
+                            <button class="whitespace-nowrap px-4 py-2 bg-gray-200 text-gray-700 rounded-lg">Saturday</button>
+                            <button class="whitespace-nowrap px-4 py-2 bg-gray-200 text-gray-700 rounded-lg">Sunday</button>
+                        </div>
+
+                        <div class="mt-4 space-y-4">
+                            <div class="border-l-4 border-blue-500 pl-4 py-2">
+                                <h3 class="font-semibold">Breakfast (7:30 AM)</h3>
+                                <p class="text-gray-700">Protein Oatmeal with Berries</p>
+                                <div class="flex space-x-2 mt-1 text-xs text-gray-500">
+                                    <span>450 cal</span>
+                                    <span>•</span>
+                                    <span>30g protein</span>
+                                    <span>•</span>
+                                    <span>60g carbs</span>
+                                    <span>•</span>
+                                    <span>12g fat</span>
+                                </div>
+                            </div>
+
+                            <div class="border-l-4 border-green-500 pl-4 py-2">
+                                <h3 class="font-semibold">Snack (10:30 AM)</h3>
+                                <p class="text-gray-700">Greek Yogurt with Nuts and Honey</p>
+                                <div class="flex space-x-2 mt-1 text-xs text-gray-500">
+                                    <span>220 cal</span>
+                                    <span>•</span>
+                                    <span>15g protein</span>
+                                    <span>•</span>
+                                    <span>20g carbs</span>
+                                    <span>•</span>
+                                    <span>8g fat</span>
+                                </div>
+                            </div>
+
+                            <div class="border-l-4 border-yellow-500 pl-4 py-2">
+                                <h3 class="font-semibold">Lunch (1:00 PM)</h3>
+                                <p class="text-gray-700">Grilled Chicken Salad with Quinoa</p>
+                                <div class="flex space-x-2 mt-1 text-xs text-gray-500">
+                                    <span>550 cal</span>
+                                    <span>•</span>
+                                    <span>40g protein</span>
+                                    <span>•</span>
+                                    <span>45g carbs</span>
+                                    <span>•</span>
+                                    <span>15g fat</span>
+                                </div>
+                            </div>
+
+                            <div class="border-l-4 border-purple-500 pl-4 py-2">
+                                <h3 class="font-semibold">Snack (4:00 PM)</h3>
+                                <p class="text-gray-700">Protein Shake with Banana</p>
+                                <div class="flex space-x-2 mt-1 text-xs text-gray-500">
+                                    <span>300 cal</span>
+                                    <span>•</span>
+                                    <span>25g protein</span>
+                                    <span>•</span>
+                                    <span>30g carbs</span>
+                                    <span>•</span>
+                                    <span>5g fat</span>
+                                </div>
+                            </div>
+
+                            <div class="border-l-4 border-red-500 pl-4 py-2">
+                                <h3 class="font-semibold">Dinner (7:00 PM)</h3>
+                                <p class="text-gray-700">Salmon with Sweet Potato and Vegetables</p>
+                                <div class="flex space-x-2 mt-1 text-xs text-gray-500">
+                                    <span>600 cal</span>
+                                    <span>•</span>
+                                    <span>35g protein</span>
+                                    <span>•</span>
+                                    <span>50g carbs</span>
+                                    <span>•</span>
+                                    <span>20g fat</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Activity Tracking -->
+        <div class="mt-8">
+            <h2 class="text-2xl font-semibold mb-4">Activity Tracking</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <h3 class="font-semibold mb-4">Steps & Activity</h3>
+                    <div class="flex items-center justify-between mb-3">
+                        <div>
+                            <p class="text-3xl font-bold">8,246</p>
+                            <p class="text-sm text-gray-500">steps today</p>
+                        </div>
+                        <div class="h-16 w-16 rounded-full bg-blue-100 flex items-center justify-center">
+                            <i class="bi bi-shoe text-blue-600 text-2xl"></i>
+                        </div>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2.5">
+                        <div class="bg-blue-600 h-2.5 rounded-full" style="width: 75%"></div>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2">Goal: 10,000 steps</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <h3 class="font-semibold mb-4">Calories Burned</h3>
+                    <div class="flex items-center justify-between mb-3">
+                        <div>
+                            <p class="text-3xl font-bold">1,820</p>
+                            <p class="text-sm text-gray-500">calories burned</p>
+                        </div>
+                        <div class="h-16 w-16 rounded-full bg-orange-100 flex items-center justify-center">
+                            <i class="bi bi-fire text-orange-600 text-2xl"></i>
+                        </div>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2.5">
+                        <div class="bg-orange-500 h-2.5 rounded-full" style="width: 65%"></div>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2">Goal: 2,500 calories</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Challenges Section -->
+        <div class="mt-8">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-semibold">Active Challenges</h2>
+                <button class="text-blue-600 hover:text-blue-800 font-medium">View All</button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-blue-100 p-3 rounded-full">
+                            <i class="bi bi-lightning text-blue-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold">10K Steps Challenge</h3>
+                            <p class="text-sm text-gray-500">5 days remaining</p>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-blue-600 rounded-full h-2" style="width: 60%"></div>
+                        </div>
+                        <div class="flex justify-between text-xs mt-1">
+                            <span>0</span>
+                            <span>Goal: 70,000 steps</span>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <button class="w-full bg-gray-200 text-gray-700 py-2 rounded-lg hover:bg-gray-300">Join 245 others</button>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-green-100 p-3 rounded-full">
+                            <i class="bi bi-award text-green-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold">30 Days of Protein</h3>
+                            <p class="text-sm text-gray-500">18 days remaining</p>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-green-600 rounded-full h-2" style="width: 40%"></div>
+                        </div>
+                        <div class="flex justify-between text-xs mt-1">
+                            <span>0</span>
+                            <span>Goal: 30 days</span>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <button class="w-full bg-gray-200 text-gray-700 py-2 rounded-lg hover:bg-gray-300">Join 189 others</button>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-purple-100 p-3 rounded-full">
+                            <i class="bi bi-heart-pulse text-purple-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold">Cardio Consistency</h3>
+                            <p class="text-sm text-gray-500">12 days remaining</p>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-purple-600 rounded-full h-2" style="width: 25%"></div>
+                        </div>
+                        <div class="flex justify-between text-xs mt-1">
+                            <span>0</span>
+                            <span>Goal: 15 sessions</span>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <button class="w-full bg-gray-200 text-gray-700 py-2 rounded-lg hover:bg-gray-300">Join 321 others</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
+        <div class="bg-white p-8 rounded-xl max-w-md w-full mx-4">
+            <h2 class="text-2xl font-semibold mb-4">Login</h2>
+            <form id="loginForm" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="email" required class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Password</label>
+                    <input type="password" required class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none">
+                </div>
+                <div class="flex justify-between items-center text-sm">
+                    <div class="flex items-center">
+                        <input type="checkbox" id="remember" class="rounded border-gray-300 text-blue-600">
+                        <label for="remember" class="ml-2 text-gray-700">Remember me</label>
+                    </div>
+                    <a href="#" class="text-blue-600 hover:text-blue-800">Forgot password?</a>
+                </div>
+                <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">Login</button>
+            </form>
+            <div class="mt-6 text-center text-sm text-gray-600">
+                <p>Don't have an account? <a href="#" class="text-blue-600 hover:text-blue-800">Sign up</a></p>
+            </div>
+            <button id="closeLoginModal" class="mt-4 text-sm text-gray-500 hover:text-gray-700 w-full text-center">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div id="signupModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
+        <div class="bg-white p-8 rounded-xl max-w-md w-full mx-4">
+            <h2 class="text-2xl font-semibold mb-4">Create an Account</h2>
+            <form id="signupForm" class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">First Name</label>
+                        <input type="text" required class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Last Name</label>
+                        <input type="text" required class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="email" required class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Password</label>
+                    <input type="password" required class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Confirm Password</label>
+                    <input type="password" required class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Your Goal</label>
+                    <select class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none">
+                        <option>Lose Weight</option>
+                        <option>Build Muscle</option>
+                        <option>Improve Fitness</option>
+                        <option>Maintain Weight</option>
+                    </select>
+                </div>
+                <div class="flex items-center">
+                    <input type="checkbox" id="terms" required class="rounded border-gray-300 text-blue-600">
+                    <label for="terms" class="ml-2 text-sm text-gray-700">I agree to the <a href="#" class="text-blue-600 hover:text-blue-800">Terms and Conditions</a></label>
+                </div>
+                <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">Sign Up</button>
+            </form>
+            <div class="mt-6 text-center text-sm text-gray-600">
+                <p>Already have an account? <a href="#" id="showLoginFromSignup" class="text-blue-600 hover:text-blue-800">Login</a></p>
+            </div>
+            <button id="closeSignupModal" class="mt-4 text-sm text-gray-500 hover:text-gray-700 w-full text-center">Cancel</button>
+        </div>
+    </div>
+
+    <script>
+        // Modal functionality
+        const loginBtn = document.getElementById('loginBtn');
+        const signupBtn = document.getElementById('signupBtn');
+        const loginModal = document.getElementById('loginModal');
+        const signupModal = document.getElementById('signupModal');
+        const closeLoginModal = document.getElementById('closeLoginModal');
+        const closeSignupModal = document.getElementById('closeSignupModal');
+        const showLoginFromSignup = document.getElementById('showLoginFromSignup');
+
+        loginBtn.addEventListener('click', () => {
+            loginModal.classList.remove('hidden');
+        });
+
+        signupBtn.addEventListener('click', () => {
+            signupModal.classList.remove('hidden');
+        });
+
+        closeLoginModal.addEventListener('click', () => {
+            loginModal.classList.add('hidden');
+        });
+
+        closeSignupModal.addEventListener('click', () => {
+            signupModal.classList.add('hidden');
+        });
+
+        showLoginFromSignup.addEventListener('click', (e) => {
+            e.preventDefault();
+            signupModal.classList.add('hidden');
+            loginModal.classList.remove('hidden');
+        });
+
+        // Close modals when clicking outside
+        loginModal.addEventListener('click', (e) => {
+            if (e.target === loginModal) {
+                loginModal.classList.add('hidden');
+            }
+        });
+
+        signupModal.addEventListener('click', (e) => {
+            if (e.target === signupModal) {
+                signupModal.classList.add('hidden');
+            }
+        });
+
+        // Form submission
+        const loginForm = document.getElementById('loginForm');
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Add your login logic here
+            loginModal.classList.add('hidden');
+        });
+
+        const signupForm = document.getElementById('signupForm');
+        signupForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Add your signup logic here
+            signupModal.classList.add('hidden');
+        });
+
+        // Progress Ring Animation
+        const circle = document.querySelector('.progress-ring__circle:last-child');
+        const radius = circle.r.baseVal.value;
+        const circumference = radius * 2 * Math.PI;
+        circle.style.strokeDasharray = `${circumference} ${circumference}`;
+        
+        // Plan tabs switching
+        const planTabs = document.querySelectorAll('.plan-tab');
+        planTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                planTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+            });
+        });
+    </script>
+<script>document.body.addEventListener('wheel', e => { if (!e.ctrlKey) return; e.preventDefault(); return }, { passive: false })</script>
+	</body>
+</html>
